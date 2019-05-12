@@ -1,9 +1,0 @@
-# depslib dependency file v1.0
-1557613986 source:d:\users\mayco\desktop\desenvolvimento\unisal\estrutura de dados\jogos de cartas\jogos de cartas\main.c
-	<allegro5/allegro.h>
-	<allegro5/allegro_native_dialog.h>
-
-1557613986 source:d:\users\mayco\desktop\desenvolvimento\unisal\estrutura de dados\jogos de cartas\estrutura-cartas\main.c
-	<allegro5/allegro.h>
-	<allegro5/allegro_native_dialog.h>
-
