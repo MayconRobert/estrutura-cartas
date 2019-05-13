@@ -6,26 +6,14 @@
 #include <string.h>
 #include <math.h>
 
-typedef struct _carta_{
-    int valor; // valor numerico da carta
+// Definição da estrutura que representa uma carta struct
+typedef struct _carta{
+    char naipe;
+    int valor;
 
-} CARTA; //carta
+} CARTA;
 
-
-typedef struct _jogador{
-    int pontos;
-    int qtdCartas;
-    CARTA * cartas[12];
-
-}JOGADOR;
-
-
-typedef struct _jogo{
-    CARTA *baralho[52];
-    JOGADOR player1;
-    JOGADOR player2;
-}JOGO;
-
+CARTA baralho[52];
 
 void gerarBaralho();
 void deletarBaralho();
