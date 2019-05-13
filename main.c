@@ -4,8 +4,8 @@
 #include <math.h>
 
 #include "jogo21.h"
-int main()
-{
-    printf("Hello world!\n");
-    return 0;
+int main(){
+    gerarBaralho();
+    embaralharBaralho();
+
 }
