@@ -14,8 +14,10 @@ cartas com figura (J, Q e K) valem 10. Os pontos de cada carta escolhida são co
 # Mecânica do Jogo
 Descrição Geral
 
-Teremos dois jogadores humanos. Como a seleção de cartas é aleatória, caberá ao **jogador 1** escolher se deseja uma outra carta ou se deseja encerrar a partida. Após isso, o **jogador 2** fará a mesma coisa. 
+Teremos dois jogadores: o jogador humano e o jogador máquina. Como a seleção de cartas é aleatória, caberá ao jogador humano escolher se deseja uma outra carta ou se deseja encerrar a partida. Após isso, cederá a vez para o jogador máquina.
 
-Caso o **jogador 1** escolha encerrar a partida, ela será encerrada logo após o **jogador 2** selecionar sua última carta, ou seja, o **jogador 2** irá selecionar apenas mais uma carta após o jogador humano decretar o fim da rodada.
+No turno do jogador máquina, uma nova carta será selecionada aleatoriamente e adicionada à sua pilha de cartas. Vale salientar que o jogador máquina sempre pegará uma nova carta, independentemente da escolha do jogador humano. Isso influi diretamente no resultado, pois o jogador humano pode utilizar isso em seu benefício para ganhar o jogo, indicando que não deseja mais cartas quando o jogador máquina possui uma quantidade de pontos muito elevada.
 
-A partida também poderá ser encerrada automaticamente caso algum dos jogadores exceda os 21 pontos ou atinja essa marca. Após isso, o jogo procederá para a divulgação do resultado da partida. Com os resultados dispostos, os jogadores são questionados se desejam uma nova partida. Em caso afirmativo, uma nova terá início. Caso contrário, o programa será encerrado.
+Caso o jogador humano escolha encerrar a partida, ela será encerrada logo após o jogador máquina selecionar sua última carta, ou seja, o jogador máquina irá selecionar apenas mais uma carta após o jogador humano decretar o fim da rodada.
+
+A partida também poderá ser encerrada automaticamente caso algum dos jogadores exceda os 21 pontos ou atinja essa marca. Após isso, o jogo procederá para a divulgação do resultado da partida. Com os resultados dispostos, o jogador humano é questionado se deseja uma nova partida. Em caso afirmativo, uma nova terá início. Caso contrário, o programa será encerrado.
