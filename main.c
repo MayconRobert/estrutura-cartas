@@ -45,6 +45,17 @@ BARALHO criar_baralho(){
     return baralho;
 }
 
+int sorteia_primeiro_jogador() {
+    //100 <= Máquina, 100 >= Jogador
+    int sorteado = rand() % 300;
+    if(sorteado <= 100) {
+        printf("A Maquina comeca");
+    } else {
+        printf("O Jogador comeca");
+    }
+    return sorteado;
+}
+
 void mostra_cartas_baralho(BARALHO baralho){
     for(int i =0; i<MAX_CARTAS; i++){
         printf("\n");
@@ -60,6 +71,8 @@ void mostra_cartas_baralho(BARALHO baralho){
 }
 
 int main(){
+    // main nao definitiva, apenas para testes
     BARALHO baralho = criar_baralho();
     mostra_cartas_baralho(baralho);
+    sorteia_primeiro_jogador();
 }
