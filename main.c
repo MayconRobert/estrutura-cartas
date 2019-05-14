@@ -1,3 +1,7 @@
+/*
+	TA FALTANDO COISA PRA UM SATANAS, NAO ME ODEIE, PAPAI DO CEU TE AMA S2
+*/
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
