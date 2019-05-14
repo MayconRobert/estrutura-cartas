@@ -4,8 +4,9 @@
 #include <math.h>
 
 #include "jogo21.h"
+
 int main(){
     gerarBaralho();
-    embaralharBaralho();
+
 
 }

@@ -6,21 +6,35 @@
 #include <string.h>
 #include <math.h>
 
-// Definição da estrutura que representa uma carta struct
-typedef struct _carta{
-    char naipe;
-    int valor;
+#define MAX_CARTAS 52
+
+typedef struct _Carta{
+        char valor;
+        char naipe;
 
 } CARTA;
 
-CARTA baralho[52];
 
-void gerarBaralho();
+typedef struct _Baralho{
+    CARTA cartas[MAX_CARTAS];
+} BARALHO;
+
+
+CARTA criarCarta(char valor){
+    CARTA carta;
+    carta.valor= valor;
+
+    return carta;
+}
+
+
+// gerarBaralho();
 void deletarBaralho();
 void embaralharBaralho();
 
 void criarMao();
 void pegarCarta();
+void deletarMao();
 
 void divulgarResultado();
 

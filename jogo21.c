@@ -4,20 +4,22 @@
 #include <math.h>
 
 #include "jogo21.h"
+#define MAX_CARTAS 52
 
-void gerarBaralho(CARTA baralho){
-    char naipes[4]={'o','c','e','p'};
-    int i, j, k;
-    k=0;
-        for(i=0;i<4;i++){
-            for(j=2;j<=14;j++){
-                baralho[k]->naipe=naipes[i];
-                baralho[k]->valor=j;
-                k++;                
-            }
+
+
+BARALHO gerarBaralho(){
+    int i= 0;
+    BARALHO baralho;
+        for(i=0; i<MAX_CARTAS; i++){
+            baralho.cartas[i].valor= 1;
         }
+
+return baralho;
 }
 
+
+/*
 void embaralharBaralho(CARTA baralho){
     int i, j, cont;
     CARTA aux;
@@ -30,3 +32,4 @@ void embaralharBaralho(CARTA baralho){
         }
 }
 
+*/
