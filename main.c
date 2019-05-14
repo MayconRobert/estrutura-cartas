@@ -5,6 +5,8 @@
 
 #define MAX_CARTAS 52
 
+const char valores = "A23456789TJQK";
+
 typedef struct _Carta{
         char valor;
         char naipe;
@@ -29,10 +31,10 @@ BARALHO gerarBaralho(){
     int j = 0;
     BARALHO baralho;
     for(j=0; j>=3; i++){
-        for(i=0; i<MAX_CARTAS; i++){
-            baralho.cartas[i].valor= 1;
+        for(i=0; i<13; i++){
+            baralho.cartas[i].valor= valores[i];
         }
-}
+    }
 return baralho;
 }
 
@@ -66,5 +68,6 @@ void divulgarResultado();
 
 int main(){
     BARALHO baralho = gerarBaralho();
+printf("%c",baralho);
 
 }
