@@ -1,16 +1,17 @@
-/*
-	TA FALTANDO COISA PRA UM SATANAS, NAO ME ODEIE, PAPAI DO CEU TE AMA S2
-*/
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #define MAX_CARTAS 32
 
+//32 nomes de 15 letras
+char animais[MAX_CARTAS][15] = {"Aguia", "Alce", "Andorinha", "Anta", "Aranha", "Avestruz", "Baleia", "Barata",
+ "Boi", "Burro", "Cabra", "Camelo", "Canguru", "Carneiro", "Cavalo", "Cisne", "Cobra", "Coruja", "Corvo", "Crocodilo",
+ "Elefante", "Egua", "Esquilo", "Frango", "Fuinha", "Gaivota", "Ganso", "Gato", "Gazela", "Gerbilo", "Girafa", "Golfinho"};
+
 typedef struct _animal {
     int id;
-    //char[2] classe;
-    //char* nome;
+    char classe[2];
+    char nome[15];
     float altura;
     float peso;
     float comprimento;
@@ -22,44 +23,43 @@ typedef struct _baralho {
     ANIMAL animal[MAX_CARTAS];
 } BARALHO;
 
-ANIMAL criar_animal(int id,float peso, float altura, float comprimento, float velocidade){
+ANIMAL criar_animal(int id, float altura, float peso, float comprimento, float velocidade, float instintoAssasino){
     ANIMAL animal;
-    animal.velocidade = velocidade;
-    animal.altura = altura;
-    animal.comprimento = comprimento;
-    animal.peso = peso;
     animal.id = id;
+    animal.altura = altura;
+    animal.peso = peso;
+    animal.comprimento = comprimento;
+    animal.velocidade = velocidade;
+    animal.instintoAssasino = instintoAssasino;
     return animal;
 }
 
-
+//Cria uma Pilha sendo baralho com cartas geradas
 BARALHO criar_baralho(){
     int id, i = 0;
-    float peso, altura, comprimento, velocidade;
     BARALHO baralho;
     for(i=0; i<MAX_CARTAS; i++){
-        baralho.animal[i].altura= i;
-        baralho.animal[i].comprimento = i;
-        baralho.animal[i].id = i;
-        baralho.animal[i].instintoAssasino = i;
-        baralho.animal[i].peso = i;
-        baralho.animal[i].velocidade = i;
+        baralho.animal[i] = criar_animal(i, rand() % 10, rand() % 100,  rand() % 100,  rand() % 100,  rand() % 100);
+        strcpy(baralho.animal[i].nome, animais[i]);
     }
     return baralho;
 }
 
-
+void mostra_cartas_baralho(BARALHO baralho){
+    for(int i =0; i<MAX_CARTAS; i++){
+        printf("\n");
+        printf("id: %d \n", baralho.animal[i].id);
+        printf("nome: %s \n", baralho.animal[i].nome);
+        printf("altura: %2.f metros \n", baralho.animal[i].altura);
+        printf("peso: %2.f kg \n", baralho.animal[i].peso);
+        printf("comprimento: %2.f metros \n", baralho.animal[i].comprimento);
+        printf("velocidade: %2.f km/h \n", baralho.animal[i].velocidade);
+        printf("instinto assasino: %2.f \n", baralho.animal[i].instintoAssasino);
+        printf("_____________________________________________________");
+    }
+}
 
 int main(){
     BARALHO baralho = criar_baralho();
-    int i =0;
-    for(i=0; i<MAX_CARTAS; i++){
-        printf("%f\n", baralho.animal[i].comprimento);
-
-    }
-	
-    char nome[] = "samuel";
-    char nome2[6];
-    strcpy(nome2, nome);
-    printf("%s", nome);
+    mostra_cartas_baralho(baralho);
 }
