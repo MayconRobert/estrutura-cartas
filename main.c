@@ -25,18 +25,20 @@ CARTA criarCarta(char valor){
 }
 
 BARALHO gerarBaralho(){
-    int i= 0;
+    int i = 0;
+    int j = 0;
     BARALHO baralho;
+    for(j=0; j>=3; i++){
         for(i=0; i<MAX_CARTAS; i++){
             baralho.cartas[i].valor= 1;
         }
-
+}
 return baralho;
 }
 
 
 /*
-void embaralharBaralho(CARTA baralho){
+BARALHO embaralharBaralho(){
     int i, j, cont;
     CARTA aux;
         for(cont=0;cont<200;cont++){
@@ -63,7 +65,6 @@ void divulgarResultado();
 */
 
 int main(){
-    gerarBaralho();
-
+    BARALHO baralho = gerarBaralho();
 
 }

@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1557862538 source:/home/lucas/developer/estrutura-cartas/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<math.h>
+
