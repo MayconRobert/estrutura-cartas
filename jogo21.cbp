@@ -31,10 +31,9 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="jogo21.c">
+		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="jogo21.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
