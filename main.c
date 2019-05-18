@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+/*<<<<<<< HEAD*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -58,6 +58,7 @@ int inserir(fila *q, int info){
                  q->fim = p;
                  return 1;
 }
+}
 
 int remover(fila *q, int *info){
 /*Remove um item do início da fila q. Retorna true se operação realizada com sucesso, false caso contrário*/
@@ -97,11 +98,11 @@ int comecoFila(fila *q, int *item){
 }
 
 
-int main(){
+/*int main(){
     printf("Hello world!\n");
     return 0;
-}
-=======
+}*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -202,4 +203,4 @@ empilhar_baralho();
 getchar();
 return 0;
 }
->>>>>>> 12f8c0c641769482b9fa1de0d725bce19af5d9a3
+/*>>>>>>> 12f8c0c641769482b9fa1de0d725bce19af5d9a3*/
