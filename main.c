@@ -36,6 +36,7 @@ ANIMAL criar_animal(int id, float altura, float peso, float comprimento, float v
 
 //Cria uma Pilha sendo baralho com cartas geradas
 BARALHO criar_baralho(){
+    srand(time(NULL));
     int id, i = 0;
     BARALHO baralho;
     for(i=0; i<MAX_CARTAS; i++){
@@ -47,11 +48,12 @@ BARALHO criar_baralho(){
 
 int sorteia_primeiro_jogador() {
     //100 <= Máquina, 100 >= Jogador
+    srand(time(NULL));
     int sorteado = rand() % 300;
     if(sorteado <= 100) {
-        printf("A Maquina comeca");
+        printf("\n A Maquina comeca");
     } else {
-        printf("O Jogador comeca");
+        printf("\n O Jogador comeca");
     }
     return sorteado;
 }
