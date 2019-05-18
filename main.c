@@ -170,9 +170,20 @@ void mostra_cartas_baralho(BARALHO baralho){
     }
 }
 
+void empilha_baralho(PTR_PILHA pilha, BARALHO baralho) {
+    int i;
+    for(i = 0 ; i<MAX_CARTAS; i++) {
+        printf("%s \n",baralho.animal[i].nome);
+        empilhar(pilha, baralho.animal[i]);
+    }
+}
+
 int main(){
     // main nao definitiva, apenas para testes
     BARALHO baralho = criar_baralho();
+    PTR_PILHA pilha = criar_pilha();
+
+    empilha_baralho(pilha, baralho);
     mostra_cartas_baralho(baralho);
     sorteia_primeiro_jogador();
 }
