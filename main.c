@@ -202,6 +202,17 @@ int pegar_carta_topo(PTR_BARALHO baralho){
 return x;
 }
 
+int sorteio_iniciar_partida(){
+    srand(time(NULL));
+    int sorteio = rand() % 100;
+    if(sorteio <= 100) {
+        printf("\n Quem começa é a Máquina!!");
+    } else {
+        printf("\n Quem começa é o Jogador!!");
+    }
+    return sorteio;
+}
+
 
 int main(){
 empilhar_baralho();
