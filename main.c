@@ -196,11 +196,15 @@ printf("%d\t",baralho->topo->valor);//esse print serve apenas como teste para ve
 }
 }
 
+int pegar_carta_topo(PTR_BARALHO baralho){
+    CARTA *x;
+    x = baralho->topo->valor;
+return x;
+}
 
 
 int main(){
 empilhar_baralho();
-getchar();
 return 0;
 }
 /*>>>>>>> 12f8c0c641769482b9fa1de0d725bce19af5d9a3*/
