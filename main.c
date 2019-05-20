@@ -107,7 +107,62 @@ int sorteio_iniciar_partida(){
     }
     return sorteio;
 }
+// Fila
+typedef struct _celula {
+    struct _celula *prox;
+    CARTA carta;
+} CELULA;
 
+typedef CELULA *PTR_CELULA;
+// fila para a mao do jogador
+typedef struct _fila {
+    PTR_BARALHO inicio;
+    PTR_BARALHO fim;
+    int tamanho;
+} FILA;
+
+typedef FILA *PTR_FILA;
+
+void inicializar_fila(PTR_FILA fila){
+    fila->inicio = NULL;
+    fila->fim = NULL;
+    fila->tamanho = 0;
+}
+
+PTR_FILA criar_fila(){
+    PTR_FILA fila = (PTR_FILA)malloc(sizeof(PTR_FILA));
+    inicializar_fila(fila);
+    return fila;
+}
+
+void inserir_fila(PTR_FILA fila, CARTA carta){
+    PTR_CELULA celula = (PTR_CELULA)malloc(sizeof(PTR_CELULA));
+    celula->carta = carta;
+    celula->prox = NULL;
+
+    if (fila->inicio == NULL){
+        fila->inicio = celula;
+    } else {
+        fila->fim->prox = celula;
+    }
+
+    fila->fim = celula;
+    fila->tamanho++;
+}
+
+CARTA remover_fila(PTR_FILA fila){
+    CARTA carta = fila->inicio->carta;
+
+    PTR_CELULA celulaLixo;
+    celulaLixo = fila->inicio;
+
+    fila->inicio = fila->inicio->prox;
+
+    fila->tamanho--;
+
+    free(celulaLixo);
+    return carta;
+}
 
 int main(){
 empilhar_baralho();
