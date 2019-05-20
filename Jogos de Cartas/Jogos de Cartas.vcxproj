@@ -135,6 +135,12 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\background.jpg" />
+    <Image Include="..\btn21.jpg" />
+    <Image Include="..\btnComoJogar.jpg" />
+    <Image Include="..\btnJogar.jpg" />
+    <Image Include="..\btnLeaderboards.jpg" />
+    <Image Include="..\btnMenu.jpg" />
+    <Image Include="..\btnTrunfo.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="..\CASTELAR.TTF" />

@@ -26,6 +26,24 @@
     <Image Include="..\background.jpg">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="..\btn21.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\btnComoJogar.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\btnJogar.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\btnLeaderboards.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\btnTrunfo.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\btnMenu.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="..\CASTELAR.TTF" />
