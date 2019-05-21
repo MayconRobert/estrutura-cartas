@@ -81,6 +81,89 @@ typedef struct _fila {
     PTR_CELULA fim;
     int tamanho;
 } FILA;
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#define MAX_CARTAS 32
+
+//32 nomes de 15 letras
+char animais[MAX_CARTAS][15] = {"Aguia", "Alce", "Andorinha", "Anta", "Aranha", "Avestruz", "Baleia", "Barata",
+ "Boi", "Burro", "Cabra", "Camelo", "Canguru", "Carneiro", "Cavalo", "Cisne", "Cobra", "Coruja", "Corvo", "Crocodilo",
+ "Elefante", "Egua", "Esquilo", "Frango", "Fuinha", "Gaivota", "Ganso", "Gato", "Gazela", "Gerbilo", "Girafa", "Golfinho"};
+
+ int qtdJogadas = 0;
+
+typedef struct _animal {
+    int id;
+    char classe[2];
+    char nome[15];
+    float altura;
+    float peso;
+    float comprimento;
+    float velocidade;
+    int instintoAssasino;
+} ANIMAL;
+
+typedef ANIMAL *PTR_ANIMAL;
+
+typedef struct _baralho {
+    PTR_ANIMAL animal[MAX_CARTAS];
+} BARALHO;
+
+typedef struct _celula {
+    struct _celula *prox;
+    PTR_ANIMAL carta;
+} CELULA;
+
+typedef CELULA *PTR_CELULA;
+
+//Cria pilha para baralho
+typedef struct _pilha {
+    PTR_CELULA topo;
+    int tamanho;
+} PILHA;
+
+typedef PILHA *PTR_PILHA;
+
+int esta_vazio(PTR_PILHA pilha){
+    return pilha->tamanho == 0 ? 1 : 0;
+}
+
+void inicializar(PTR_PILHA pilha){
+    pilha->tamanho = 0;
+    pilha->topo = NULL;
+}
+
+PTR_PILHA criar_pilha(){
+    PTR_PILHA pilha = (PTR_PILHA)malloc(sizeof(PTR_PILHA));
+    inicializar(pilha);
+    return pilha;
+}
+
+void empilhar(PTR_PILHA pilha, PTR_ANIMAL carta){
+    PTR_CELULA celula = (PTR_CELULA)malloc(sizeof(PTR_CELULA));
+    celula->carta = carta;
+    celula->prox = pilha->topo;
+    pilha->topo = celula;
+    pilha->tamanho++;
+}
+
+void desempilhar(PTR_PILHA pilha, PTR_ANIMAL outCarta){
+    if (!esta_vazio(pilha)){
+        PTR_CELULA lixo = pilha->topo;
+        outCarta = lixo->carta;
+        pilha->topo = pilha->topo->prox;
+        free(lixo);
+        pilha->tamanho--;
+    }
+}
+
+// fila para a mao do jogador
+typedef struct _fila {
+    PTR_CELULA inicio;
+    PTR_CELULA fim;
+    int tamanho;
+} FILA;
 
 typedef FILA *PTR_FILA;
 
@@ -207,6 +290,17 @@ void adicionar_cartas_nas_maos(PTR_FILA fila1, PTR_FILA fila2, PTR_PILHA pilha) 
     }
 }
 
+void mostra_mao(PTR_FILA mao) {
+    if (mao->tamanho > 0) {
+        int count = 0;
+        while(count<16 && mao->inicio) {
+            count++;
+            printf("carta: %d, %s, id: %d \n",count, mao->inicio->carta->nome, mao->inicio->carta->id);
+            mao->inicio = mao->inicio->prox;
+        }
+    }
+}
+
 int main(){
     // main nao definitiva, apenas para testes
     BARALHO baralho = criar_baralho();
@@ -221,6 +315,12 @@ int main(){
 
     // separa a pilha do baralho no meio e adiciona em duas filas, uma para o jogador e outra para a máquina
     adicionar_cartas_nas_maos(maoJogador, maoMaquina, pilha);
+
+    printf("\n mao do jogador: \n");
+    mostra_mao(maoJogador);
+
+    printf("\n mao da maquina: \n");
+    mostra_mao(maoMaquina);
 
     // contar jogadas:
     qtdJogadas++;
