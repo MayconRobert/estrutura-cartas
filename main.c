@@ -8,6 +8,8 @@ char animais[MAX_CARTAS][15] = {"Aguia", "Alce", "Andorinha", "Anta", "Aranha", 
  "Boi", "Burro", "Cabra", "Camelo", "Canguru", "Carneiro", "Cavalo", "Cisne", "Cobra", "Coruja", "Corvo", "Crocodilo",
  "Elefante", "Egua", "Esquilo", "Frango", "Fuinha", "Gaivota", "Ganso", "Gato", "Gazela", "Gerbilo", "Girafa", "Golfinho"};
 
+ int qtdJogadas = 0;
+
 typedef struct _animal {
     int id;
     char classe[2];
@@ -19,13 +21,15 @@ typedef struct _animal {
     int instintoAssasino;
 } ANIMAL;
 
+typedef ANIMAL *PTR_ANIMAL;
+
 typedef struct _baralho {
-    ANIMAL animal[MAX_CARTAS];
+    PTR_ANIMAL animal[MAX_CARTAS];
 } BARALHO;
 
 typedef struct _celula {
     struct _celula *prox;
-    ANIMAL carta;
+    PTR_ANIMAL carta;
 } CELULA;
 
 typedef CELULA *PTR_CELULA;
@@ -53,7 +57,7 @@ PTR_PILHA criar_pilha(){
     return pilha;
 }
 
-void empilhar(PTR_PILHA pilha, ANIMAL carta){
+void empilhar(PTR_PILHA pilha, PTR_ANIMAL carta){
     PTR_CELULA celula = (PTR_CELULA)malloc(sizeof(PTR_CELULA));
     celula->carta = carta;
     celula->prox = pilha->topo;
@@ -61,10 +65,10 @@ void empilhar(PTR_PILHA pilha, ANIMAL carta){
     pilha->tamanho++;
 }
 
-void desempilhar(PTR_PILHA pilha, ANIMAL *outCarta){
+void desempilhar(PTR_PILHA pilha, PTR_ANIMAL outCarta){
     if (!esta_vazio(pilha)){
         PTR_CELULA lixo = pilha->topo;
-        *outCarta = lixo->carta;
+        outCarta = lixo->carta;
         pilha->topo = pilha->topo->prox;
         free(lixo);
         pilha->tamanho--;
@@ -92,7 +96,7 @@ PTR_FILA criar_fila(){
     return fila;
 }
 
-void inserir_fila(PTR_FILA fila, ANIMAL carta){
+void inserir_fila(PTR_FILA fila, PTR_ANIMAL carta){
     PTR_CELULA celula = (PTR_CELULA)malloc(sizeof(PTR_CELULA));
     celula->carta = carta;
     celula->prox = NULL;
@@ -107,8 +111,8 @@ void inserir_fila(PTR_FILA fila, ANIMAL carta){
     fila->tamanho++;
 }
 
-ANIMAL remover_fila(PTR_FILA fila){
-    ANIMAL carta = fila->inicio->carta;
+PTR_ANIMAL remover_fila(PTR_FILA fila){
+    PTR_ANIMAL carta = fila->inicio->carta;
 
     PTR_CELULA celulaLixo;
     celulaLixo = fila->inicio;
@@ -121,14 +125,14 @@ ANIMAL remover_fila(PTR_FILA fila){
     return carta;
 }
 
-ANIMAL criar_animal(int id, float altura, float peso, float comprimento, float velocidade, float instintoAssasino){
-    ANIMAL animal;
-    animal.id = id;
-    animal.altura = altura;
-    animal.peso = peso;
-    animal.comprimento = comprimento;
-    animal.velocidade = velocidade;
-    animal.instintoAssasino = instintoAssasino;
+PTR_ANIMAL criar_animal(int id, float altura, float peso, float comprimento, float velocidade, float instintoAssasino){
+    PTR_ANIMAL animal = (PTR_ANIMAL)malloc(sizeof(ANIMAL));
+    animal->id = id;
+    animal->altura = altura;
+    animal->peso = peso;
+    animal->comprimento = comprimento;
+    animal->velocidade = velocidade;
+    animal->instintoAssasino = instintoAssasino;
     return animal;
 }
 
@@ -139,13 +143,13 @@ BARALHO criar_baralho(){
     BARALHO baralho;
     for(i=0; i<MAX_CARTAS; i++){
         baralho.animal[i] = criar_animal(i, rand() % 10, rand() % 100,  rand() % 100,  rand() % 100,  rand() % 100);
-        strcpy(baralho.animal[i].nome, animais[i]);
+        strcpy(baralho.animal[i]->nome, animais[i]);
     }
     return baralho;
 }
 
 int sorteia_primeiro_jogador() {
-    //100 <= M�quina, 100 >= Jogador
+    //100 <= Máquina, 100 >= Jogador
     srand(time(NULL));
     int sorteado = rand() % 300;
     if(sorteado <= 100) {
@@ -159,13 +163,13 @@ int sorteia_primeiro_jogador() {
 void mostra_cartas_baralho(BARALHO baralho){
     for(int i =0; i<MAX_CARTAS; i++){
         printf("\n");
-        printf("id: %d \n", baralho.animal[i].id);
-        printf("nome: %s \n", baralho.animal[i].nome);
-        printf("altura: %2.f metros \n", baralho.animal[i].altura);
-        printf("peso: %2.f kg \n", baralho.animal[i].peso);
-        printf("comprimento: %2.f metros \n", baralho.animal[i].comprimento);
-        printf("velocidade: %2.f km/h \n", baralho.animal[i].velocidade);
-        printf("instinto assasino: %2.f \n", baralho.animal[i].instintoAssasino);
+        printf("id: %d \n", baralho.animal[i]->id);
+        printf("nome: %s \n", baralho.animal[i]->nome);
+        printf("altura: %2.f metros \n", baralho.animal[i]->altura);
+        printf("peso: %2.f kg \n", baralho.animal[i]->peso);
+        printf("comprimento: %2.f metros \n", baralho.animal[i]->comprimento);
+        printf("velocidade: %2.f km/h \n", baralho.animal[i]->velocidade);
+        printf("instinto assasino: %2.f \n", baralho.animal[i]->instintoAssasino);
         printf("_____________________________________________________");
     }
 }
@@ -173,8 +177,33 @@ void mostra_cartas_baralho(BARALHO baralho){
 void empilha_baralho(PTR_PILHA pilha, BARALHO baralho) {
     int i;
     for(i = 0 ; i<MAX_CARTAS; i++) {
-        printf("%s \n",baralho.animal[i].nome);
         empilhar(pilha, baralho.animal[i]);
+    }
+}
+
+void adicionar_cartas_nas_maos(PTR_FILA fila1, PTR_FILA fila2, PTR_PILHA pilha) {
+    if (pilha->tamanho > 0) {
+        int count = 0;
+            printf("\n");
+        while(count<16) {
+            PTR_CELULA topo = pilha->topo;
+            PTR_ANIMAL carta = topo->carta;
+            inserir_fila(fila1, carta);
+            pilha->topo = topo->prox;
+            count++;
+            printf("fila 1, count = %d \n", count);
+        }
+
+        while(count<32) {
+            PTR_CELULA topo = pilha->topo;
+            if (topo) {
+                PTR_ANIMAL carta = topo->carta;
+                inserir_fila(fila2, carta);
+                pilha->topo = topo->prox;
+                count++;
+            printf("fila 2, count = %d \n", count);
+            }
+        }
     }
 }
 
@@ -183,7 +212,16 @@ int main(){
     BARALHO baralho = criar_baralho();
     PTR_PILHA pilha = criar_pilha();
 
+    PTR_FILA maoJogador = criar_fila();
+    PTR_FILA maoMaquina = criar_fila();
+
     empilha_baralho(pilha, baralho);
     mostra_cartas_baralho(baralho);
     sorteia_primeiro_jogador();
+
+    // separa a pilha do baralho no meio e adiciona em duas filas, uma para o jogador e outra para a máquina
+    adicionar_cartas_nas_maos(maoJogador, maoMaquina, pilha);
+
+    // contar jogadas:
+    qtdJogadas++;
 }
