@@ -107,17 +107,19 @@ int sorteio_iniciar_partida(){
     }
     return sorteio;
 }
-// Fila
-typedef struct _celula {
+
+
+// Começo da parte de fila
+typedef struct _celula{
     struct _celula *prox;
-    CARTA carta;
+    PTR_CARTA numero;
 } CELULA;
 
 typedef CELULA *PTR_CELULA;
-// fila para a mao do jogador
-typedef struct _fila {
-    PTR_BARALHO inicio;
-    PTR_BARALHO fim;
+
+typedef struct _fila{
+    PTR_CELULA inicio;
+    PTR_CELULA fim;
     int tamanho;
 } FILA;
 
@@ -135,12 +137,21 @@ PTR_FILA criar_fila(){
     return fila;
 }
 
-void inserir_fila(PTR_FILA fila, CARTA carta){
+void imprimir_fila(PTR_FILA fila){
+    PTR_CELULA celula = fila->inicio;
+    while (celula != NULL){
+        printf("%d ", celula->numero);
+        celula = celula->prox;
+    }
+    printf("\n");
+}
+
+void inserir_fila(PTR_FILA fila, PTR_CARTA numero){
     PTR_CELULA celula = (PTR_CELULA)malloc(sizeof(PTR_CELULA));
-    celula->carta = carta;
+    celula->numero = numero;
     celula->prox = NULL;
 
-    if (fila->inicio == NULL){
+    if(fila->inicio == NULL){
         fila->inicio = celula;
     } else {
         fila->fim->prox = celula;
@@ -150,8 +161,8 @@ void inserir_fila(PTR_FILA fila, CARTA carta){
     fila->tamanho++;
 }
 
-CARTA remover_fila(PTR_FILA fila){
-    CARTA carta = fila->inicio->carta;
+int remover_fila(PTR_FILA fila){
+    int numero = fila->inicio->numero;
 
     PTR_CELULA celulaLixo;
     celulaLixo = fila->inicio;
@@ -161,10 +172,12 @@ CARTA remover_fila(PTR_FILA fila){
     fila->tamanho--;
 
     free(celulaLixo);
-    return carta;
+    return numero;
 }
 
 int main(){
-empilhar_baralho();
+PTR_FILA fila = criar_fila();
+//empilhar_baralho();
+imprimir_fila(fila);
 return 0;
 }
