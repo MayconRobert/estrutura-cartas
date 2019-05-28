@@ -153,7 +153,7 @@ int sorteia_primeiro_jogador() {
     srand(time(NULL));
     int sorteado = rand() % 300;
     if(sorteado <= 100) {
-        printf("\n A Maquina comeca");
+        printf("\n A Maquina comeca\n");
         return 1;
     } else {
         printf("\n O Jogador comeca");
@@ -209,17 +209,31 @@ void adicionar_cartas_nas_maos(PTR_FILA fila1, PTR_FILA fila2, PTR_PILHA pilha) 
 }
 
 int jogo(PTR_FILA maoJogador, PTR_FILA maoMaquina){
-    int jogaPrimeiro = sorteia_primeiro_jogador();
+    int qmJoga = sorteia_primeiro_jogador();
     PTR_ANIMAL atualJogador;
     PTR_ANIMAL atualMaq;
-    int teste = 0;
+    int numJogada = 1;
     int op;
     while (1)
     {   
+        printf("Jogada de numero %d \n", numJogada);
+        printf("Tamanho da mao do jogador %d \n", maoJogador->tamanho);
+        printf("Tamanho da mao do bot %d \n", maoMaquina->tamanho);
+        
+
+        if (maoMaquina->tamanho == 0)
+        {
+            //Jogador ganhou
+            return 1;
+        }else if(maoJogador->tamanho == 0)
+        {
+            // Maquina ganhou
+            return 2;
+        }
         atualJogador = remover_fila(maoJogador);
         atualMaq = remover_fila(maoMaquina);
-
-        if(jogaPrimeiro == 1){
+        //Alterna entre quem joga na rodada
+        if(qmJoga%2 != 1){
             printf("Escolha a opcao para jogar sua carta\n");
             printf("nome: %s \n", atualJogador->nome);
             printf("1 - altura: %2.f metros \n", atualJogador->altura);
@@ -229,82 +243,96 @@ int jogo(PTR_FILA maoJogador, PTR_FILA maoMaquina){
             printf("5 - instinto assasino: %2.f \n", atualJogador->instintoAssasino);
             printf("Opcao: ");
             scanf("%d", &op);
-            switch (op)
-            {
-            case 1:
-                if (atualJogador->altura > atualMaq->altura)
-                {
-                    // Adiciona na na fila de cartas do jogador       
-                }else
-                {
-                    // Adiciona na na fila de cartas do bot
-                }
-                // volta para a funcao de jogar, passando por parametro as filas
-                break;
-            case 2:
-                if (atualJogador->peso > atualMaq->peso)
-                {
-                    // Adiciona na na fila de cartas do jogador       
-                }else
-                {
-                    // Adiciona na na fila de cartas do bot
-                }
-                // volta para a funcao de jogar, passando por parametro as filas
-                break;
-            case 3:
-                if (atualJogador->comprimento > atualMaq->comprimento)
-                {
-                    // Adiciona na na fila de cartas do jogador       
-                }else
-                {
-                    // Adiciona na na fila de cartas do bot
-                }
-                // volta para a funcao de jogar, passando por parametro as filas
-                break;
-            case 4:
-                if (atualJogador->velocidade > atualMaq->velocidade)
-                {
-                    // Adiciona na na fila de cartas do jogador       
-                }else
-                {
-                    // Adiciona na na fila de cartas do bot
-                }
-                // volta para a funcao de jogar, passando por parametro as filas
-                break;
-            case 5:
-                if (atualJogador->instintoAssasino > atualMaq->instintoAssasino)
-                {
-                    // Adiciona na na fila de cartas do jogador       
-                }else
-                {
-                    // Adiciona na na fila de cartas do bot
-                }
-                // volta para a funcao de jogar, passando por parametro as filas
-                break;
-            
-            default:
-                break;
-            }
         }
-
-
-        if (maoJogador->tamanho == 0 || maoMaquina->tamanho == 0)
+        else
         {
-            return;
+            srand ( time(NULL) );
+            op = (rand() % 4) + 1;
         }
-        printf("Jogada de numero %d \n", teste);
-
-        if (atualJogador->altura > atualMaq->altura)
-        {
-            printf("\nA Carta do jogador (%s) eh maior que a do bot\n", atualJogador->nome);        
-        }else
-        {
-            printf("\nA Carta do bot (%s)eh maior que a do player \n", atualMaq->nome);
+               
+    switch (op)
+                {
+                case 1:
+                    if (atualJogador->altura >= atualMaq->altura)
+                    {
+                        printf("A carta do jogador %s com %f ganhou da carta do bot %s com %f no atributo de altura\n", atualJogador->nome, atualJogador->altura, atualMaq->nome, atualMaq->altura);
+                        inserir_fila(maoJogador, atualJogador);
+                        inserir_fila(maoJogador, atualMaq);
+                    }else
+                    {
+                        printf("A carta do bot %s com %f ganhou da carta do jogador %s com %f no atributo de altura\n", atualMaq->nome, atualMaq->altura, atualJogador->nome, atualJogador->altura);
+                        inserir_fila(maoMaquina, atualJogador);
+                        inserir_fila(maoMaquina, atualMaq);
+                    }
+                    // volta para o while (eu espero)
+                    break;
+                case 2:
+                    if (atualJogador->peso >= atualMaq->peso)
+                    {
+                        printf("A carta do jogador %s com %f ganhou da carta do bot %s com %f no atributo de peso\n", atualJogador->nome, atualJogador->peso, atualMaq->nome, atualMaq->peso);
+                        inserir_fila(maoJogador, atualJogador);
+                        inserir_fila(maoJogador, atualMaq);    
+                    }else
+                    {
+                        printf("A carta do bot %s com %f ganhou da carta do jogador %s com %f no atributo de peso\n", atualMaq->nome, atualMaq->peso, atualJogador->nome, atualJogador->peso);
+                        inserir_fila(maoMaquina, atualJogador);
+                        inserir_fila(maoMaquina, atualMaq);
+                    }
+                    // volta para a funcao de jogar, passando por parametro as filas
+                    break;
+                case 3:
+                    if (atualJogador->comprimento >= atualMaq->comprimento)
+                    {
+                        printf("A carta do jogador %s com %f ganhou da carta do bot %s com %f no atributo de comprimento\n", atualJogador->nome, atualJogador->comprimento, atualMaq->nome, atualMaq->comprimento);
+                        inserir_fila(maoJogador, atualJogador);
+                        inserir_fila(maoJogador, atualMaq);
+                    }else
+                    {
+                        printf("A carta do bot %s com %f ganhou da carta do jogador %s com %f no atributo de comprimento\n", atualMaq->nome, atualMaq->comprimento, atualJogador->nome, atualJogador->comprimento);
+                        inserir_fila(maoMaquina, atualJogador);
+                        inserir_fila(maoMaquina, atualMaq);
+                    }
+                    // volta para a funcao de jogar, passando por parametro as filas
+                    break;
+                case 4:
+                    if (atualJogador->velocidade >= atualMaq->velocidade)
+                    {
+                        printf("A carta do jogador %s com %f ganhou da carta do bot %s com %f no atributo de velocidade\n", atualJogador->nome, atualJogador->velocidade, atualMaq->nome, atualMaq->velocidade);
+                        inserir_fila(maoJogador, atualJogador);
+                        inserir_fila(maoJogador, atualMaq);       
+                    }else
+                    {
+                        printf("A carta do bot %s com %f ganhou da carta do jogador %s com %f no atributo de velocidade\n", atualMaq->nome, atualMaq->velocidade, atualJogador->nome, atualJogador->velocidade);
+                        inserir_fila(maoMaquina, atualJogador);
+                        inserir_fila(maoMaquina, atualMaq);
+                    }
+                    // volta para a funcao de jogar, passando por parametro as filas
+                    break;
+                case 5:
+                    if (atualJogador->instintoAssasino >= atualMaq->instintoAssasino)
+                    {
+                        printf("A carta do jogador %s com %f ganhou da carta do bot %s com %f no atributo de instinto assasino\n", atualJogador->nome, atualJogador->instintoAssasino, atualMaq->nome, atualMaq->instintoAssasino);
+                        inserir_fila(maoJogador, atualJogador);
+                        inserir_fila(maoJogador, atualMaq);       
+                    }else
+                    {
+                        printf("A carta do bot %s com %f ganhou da carta do jogador %s com %f no atributo de instinto assasino\n", atualMaq->nome, atualMaq->velocidade, atualJogador->nome, atualJogador->velocidade);
+                        inserir_fila(maoJogador, atualJogador);
+                        inserir_fila(maoJogador, atualMaq);
+                    }
+                    // volta para a funcao de jogar, passando por parametro as filas
+                    break;
+                default:
+                    
+                    break;
+                }
+            printf("\n");
+            printf("\n");
+            printf("\n");
+            numJogada++;
+            qmJoga++;
         }
-        teste++;
     }
-    return 1;
-}
 
 void mostra_mao(PTR_FILA mao) {
     if (mao->tamanho > 0) {
@@ -342,6 +370,8 @@ int recupera_qtd_jogadas() {
 }
 
 int main(){
+
+    system("clear");
     // main nao definitiva, apenas para testes
     BARALHO baralho = criar_baralho();
     PTR_PILHA pilha = criar_pilha();
@@ -354,18 +384,22 @@ int main(){
     // separa a pilha do baralho no meio e adiciona em duas filas, uma para o jogador e outra para a máquina
     adicionar_cartas_nas_maos(maoJogador, maoMaquina, pilha);
 
+    
+    int resultado = jogo(maoJogador, maoMaquina);
+    if(resultado == 1){
+        printf("O jogador ganhou!!");
+    }
+    printf("O bot ganhou!!");
+    
+    //printf("\n mao do jogador: \n");
+    //mostra_mao(maoJogador);
 
-    jogo(maoJogador, maoMaquina);
+    //printf("\n mao da maquina: \n");
+    //mostra_mao(maoMaquina);
 
-    /*
-    printf("\n mao do jogador: \n");
-    mostra_mao(maoJogador);
-
-    printf("\n mao da maquina: \n");
-    mostra_mao(maoMaquina);
-    */
     // contar jogadas:
     qtdJogadas++;
     salva_qtd_jogadas();
     recupera_qtd_jogadas();
+
 }
