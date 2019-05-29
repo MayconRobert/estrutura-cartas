@@ -18,7 +18,7 @@ typedef struct _animal {
     float peso;
     float comprimento;
     float velocidade;
-    int instintoAssasino;
+    float instintoAssasino;
 } ANIMAL;
 
 typedef ANIMAL *PTR_ANIMAL;
@@ -142,7 +142,7 @@ BARALHO criar_baralho(){
     int id, i = 0;
     BARALHO baralho;
     for(i=0; i<MAX_CARTAS; i++){
-        baralho.animal[i] = criar_animal(i, rand() % 10, rand() % 100,  rand() % 100,  rand() % 100,  rand() % 100);
+        baralho.animal[i] = criar_animal(i, (rand() % 10) + 1, (rand() % 99) + 1,  (rand() % 99) + 1,  (rand() % 99) + 1,  (rand() % 99) + 1);
         strcpy(baralho.animal[i]->nome, animais[i]);
     }
     return baralho;
@@ -153,10 +153,10 @@ int sorteia_primeiro_jogador() {
     srand(time(NULL));
     int sorteado = rand() % 300;
     if(sorteado <= 100) {
-        printf("\n A Maquina comeca\n");
+        printf("\t\tA Maquina comeca\n");
         return 1;
     } else {
-        printf("\n O Jogador comeca");
+        printf("O Jogador comeca\n");
         return 2;
     }
 }
@@ -216,7 +216,7 @@ int jogo(PTR_FILA maoJogador, PTR_FILA maoMaquina){
     int op;
     while (1)
     {   
-        printf("Jogada de numero %d \n", numJogada);
+        printf("\t\t\nJogada de numero %d\n\n", numJogada);
         printf("Tamanho da mao do jogador %d \n", maoJogador->tamanho);
         printf("Tamanho da mao do bot %d \n", maoMaquina->tamanho);
         
@@ -235,14 +235,17 @@ int jogo(PTR_FILA maoJogador, PTR_FILA maoMaquina){
         //Alterna entre quem joga na rodada
         if(qmJoga%2 != 1){
             printf("Escolha a opcao para jogar sua carta\n");
-            printf("nome: %s \n", atualJogador->nome);
-            printf("1 - altura: %2.f metros \n", atualJogador->altura);
-            printf("2 - peso: %2.f kg \n", atualJogador->peso);
-            printf("3 - comprimento: %2.f metros \n", atualJogador->comprimento);
-            printf("4 - velocidade: %2.f km/h \n", atualJogador->velocidade);
-            printf("5 - instinto assasino: %2.f \n", atualJogador->instintoAssasino);
+            printf("Nome: %s \n", atualJogador->nome);
+            printf("1 - Altura: %2.f metros \n", atualJogador->altura);
+            printf("2 - Peso: %2.f kg \n", atualJogador->peso);
+            printf("3 - Comprimento: %2.f metros \n", atualJogador->comprimento);
+            printf("4 - Velocidade: %2.f km/h \n", atualJogador->velocidade);
+            printf("5 - Instinto assasino: %2.f \n", atualJogador->instintoAssasino);
             printf("Opcao: ");
             scanf("%d", &op);
+            printf("Resultado: ");
+
+
         }
         else
         {
@@ -255,26 +258,25 @@ int jogo(PTR_FILA maoJogador, PTR_FILA maoMaquina){
                 case 1:
                     if (atualJogador->altura >= atualMaq->altura)
                     {
-                        printf("A carta do jogador %s com %f ganhou da carta do bot %s com %f no atributo de altura\n", atualJogador->nome, atualJogador->altura, atualMaq->nome, atualMaq->altura);
+                        printf("A carta do jogador (%s) com %.2f ganhou da carta do bot (%s) com %.2f no atributo de altura\n", atualJogador->nome, atualJogador->altura, atualMaq->nome, atualMaq->altura);
                         inserir_fila(maoJogador, atualJogador);
                         inserir_fila(maoJogador, atualMaq);
-                    }else
+                    }else if((atualMaq->altura >= atualJogador->altura))
                     {
-                        printf("A carta do bot %s com %f ganhou da carta do jogador %s com %f no atributo de altura\n", atualMaq->nome, atualMaq->altura, atualJogador->nome, atualJogador->altura);
+                        printf("A carta do bot (%s) com %.2f ganhou da carta do jogador (%s) com %.2f no atributo de altura\n", atualMaq->nome, atualMaq->altura, atualJogador->nome, atualJogador->altura);
                         inserir_fila(maoMaquina, atualJogador);
                         inserir_fila(maoMaquina, atualMaq);
                     }
-                    // volta para o while (eu espero)
                     break;
                 case 2:
                     if (atualJogador->peso >= atualMaq->peso)
                     {
-                        printf("A carta do jogador %s com %f ganhou da carta do bot %s com %f no atributo de peso\n", atualJogador->nome, atualJogador->peso, atualMaq->nome, atualMaq->peso);
+                        printf("A carta do jogador (%s) com %.2f ganhou da carta do bot (%s) com %.2f no atributo de peso\n", atualJogador->nome, atualJogador->peso, atualMaq->nome, atualMaq->peso);
                         inserir_fila(maoJogador, atualJogador);
                         inserir_fila(maoJogador, atualMaq);    
-                    }else
+                    }else if((atualMaq->peso >= atualJogador->peso))
                     {
-                        printf("A carta do bot %s com %f ganhou da carta do jogador %s com %f no atributo de peso\n", atualMaq->nome, atualMaq->peso, atualJogador->nome, atualJogador->peso);
+                        printf("A carta do bot (%s) com %.2f ganhou da carta do jogador (%s) com %.2f no atributo de peso\n", atualMaq->nome, atualMaq->peso, atualJogador->nome, atualJogador->peso);
                         inserir_fila(maoMaquina, atualJogador);
                         inserir_fila(maoMaquina, atualMaq);
                     }
@@ -283,12 +285,12 @@ int jogo(PTR_FILA maoJogador, PTR_FILA maoMaquina){
                 case 3:
                     if (atualJogador->comprimento >= atualMaq->comprimento)
                     {
-                        printf("A carta do jogador %s com %f ganhou da carta do bot %s com %f no atributo de comprimento\n", atualJogador->nome, atualJogador->comprimento, atualMaq->nome, atualMaq->comprimento);
+                        printf("A carta do jogador (%s) com %.2f ganhou da carta do bot (%s) com %.2f no atributo de comprimento\n", atualJogador->nome, atualJogador->comprimento, atualMaq->nome, atualMaq->comprimento);
                         inserir_fila(maoJogador, atualJogador);
                         inserir_fila(maoJogador, atualMaq);
-                    }else
+                    }else if((atualMaq->comprimento >= atualJogador->comprimento))
                     {
-                        printf("A carta do bot %s com %f ganhou da carta do jogador %s com %f no atributo de comprimento\n", atualMaq->nome, atualMaq->comprimento, atualJogador->nome, atualJogador->comprimento);
+                        printf("A carta do bot (%s) com %.2f ganhou da carta do jogador (%s) com %.2f no atributo de comprimento\n", atualMaq->nome, atualMaq->comprimento, atualJogador->nome, atualJogador->comprimento);
                         inserir_fila(maoMaquina, atualJogador);
                         inserir_fila(maoMaquina, atualMaq);
                     }
@@ -297,12 +299,12 @@ int jogo(PTR_FILA maoJogador, PTR_FILA maoMaquina){
                 case 4:
                     if (atualJogador->velocidade >= atualMaq->velocidade)
                     {
-                        printf("A carta do jogador %s com %f ganhou da carta do bot %s com %f no atributo de velocidade\n", atualJogador->nome, atualJogador->velocidade, atualMaq->nome, atualMaq->velocidade);
+                        printf("A carta do jogador (%s) com %.2f ganhou da carta do bot (%s) com %.2f no atributo de velocidade\n", atualJogador->nome, atualJogador->velocidade, atualMaq->nome, atualMaq->velocidade);
                         inserir_fila(maoJogador, atualJogador);
                         inserir_fila(maoJogador, atualMaq);       
-                    }else
+                    }else if((atualMaq->velocidade >= atualJogador->velocidade))
                     {
-                        printf("A carta do bot %s com %f ganhou da carta do jogador %s com %f no atributo de velocidade\n", atualMaq->nome, atualMaq->velocidade, atualJogador->nome, atualJogador->velocidade);
+                        printf("A carta do bot (%s) com %.2f ganhou da carta do jogador (%s) com %.2f no atributo de velocidade\n", atualMaq->nome, atualMaq->velocidade, atualJogador->nome, atualJogador->velocidade);
                         inserir_fila(maoMaquina, atualJogador);
                         inserir_fila(maoMaquina, atualMaq);
                     }
@@ -311,23 +313,20 @@ int jogo(PTR_FILA maoJogador, PTR_FILA maoMaquina){
                 case 5:
                     if (atualJogador->instintoAssasino >= atualMaq->instintoAssasino)
                     {
-                        printf("A carta do jogador %s com %f ganhou da carta do bot %s com %f no atributo de instinto assasino\n", atualJogador->nome, atualJogador->instintoAssasino, atualMaq->nome, atualMaq->instintoAssasino);
+                        printf("A carta do jogador (%s) com %.2f ganhou da carta do bot (%s) com %.2f no atributo de instinto assasino\n", atualJogador->nome, atualJogador->instintoAssasino, atualMaq->nome, atualMaq->instintoAssasino);
                         inserir_fila(maoJogador, atualJogador);
                         inserir_fila(maoJogador, atualMaq);       
-                    }else
+                    }else if((atualMaq->instintoAssasino >= atualJogador->instintoAssasino))
                     {
-                        printf("A carta do bot %s com %f ganhou da carta do jogador %s com %f no atributo de instinto assasino\n", atualMaq->nome, atualMaq->velocidade, atualJogador->nome, atualJogador->velocidade);
+                        printf("A carta do bot (%s) com %.2f ganhou da carta do jogador (%s) com %.2f no atributo de instinto assasino\n", atualMaq->nome, atualMaq->velocidade, atualJogador->nome, atualJogador->velocidade);
                         inserir_fila(maoJogador, atualJogador);
                         inserir_fila(maoJogador, atualMaq);
                     }
                     // volta para a funcao de jogar, passando por parametro as filas
                     break;
                 default:
-                    
                     break;
                 }
-            printf("\n");
-            printf("\n");
             printf("\n");
             numJogada++;
             qmJoga++;
