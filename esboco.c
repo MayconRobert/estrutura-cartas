@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 #define MAX_CARTAS 32
 
 //32 nomes de 15 letras
@@ -145,8 +146,19 @@ BARALHO criar_baralho(){
         baralho.animal[i] = criar_animal(i, (rand() % 10) + 1, (rand() % 99) + 1,  (rand() % 99) + 1,  (rand() % 99) + 1,  (rand() % 99) + 1);
         strcpy(baralho.animal[i]->nome, animais[i]);
     }
+    
+    srand ( time(NULL) ); 
+    for (int l = 32-1; l > 0; l--) 
+    { 
+        int j = rand() % (l+1); 
+        PTR_ANIMAL temp = baralho.animal[l];
+        baralho.animal[l] = baralho.animal[j];
+        baralho.animal[j] = temp;
+
+    } 
     return baralho;
 }
+
 
 int sorteia_primeiro_jogador() {
     //100 <= Máquina, 100 >= Jogador
@@ -185,7 +197,6 @@ void empilha_baralho(PTR_PILHA pilha, BARALHO baralho) {
 void adicionar_cartas_nas_maos(PTR_FILA fila1, PTR_FILA fila2, PTR_PILHA pilha) {
     if (pilha->tamanho > 0) {
         int count = 0;
-            printf("\n");
         while(count<16) {
             PTR_CELULA topo = pilha->topo;
             PTR_ANIMAL carta = topo->carta;
@@ -223,11 +234,11 @@ int jogo(PTR_FILA maoJogador, PTR_FILA maoMaquina){
 
         if (maoMaquina->tamanho == 0)
         {
-            //Jogador ganhou
+            salva_qtd_jogadas(numJogada, 1);
             return 1;
         }else if(maoJogador->tamanho == 0)
         {
-            // Maquina ganhou
+            salva_qtd_jogadas(numJogada, 0);
             return 2;
         }
         atualJogador = remover_fila(maoJogador);
@@ -344,15 +355,27 @@ void mostra_mao(PTR_FILA mao) {
     }
 }
 
-int salva_qtd_jogadas() {
+int salva_qtd_jogadas(int qtdJogadas, int ganhador) {
     FILE *f = fopen("totalJogadas.txt", "w");
+
+  time_t now;
+  time(&now);
+
+
     if (!f)
     {
         printf("Erro ao abrir o arquivo!\n");
         exit(1);
     }
+    
     /* print integers and floats */
-    fprintf(f, "total de jogadas: %d", qtdJogadas);
+    if(ganhador == 1)
+    {
+        fprintf(f, "Data: %s -- Ganhador: Player com %d", ctime(&now), qtdJogadas);
+    }else
+    {
+        fprintf(f, "Data: %s -- Ganhador: Bot com %d", ctime(&now), qtdJogadas);
+    }
     fclose(f);
 }
 
