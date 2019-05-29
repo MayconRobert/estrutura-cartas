@@ -318,7 +318,7 @@ int jogo(PTR_FILA maoJogador, PTR_FILA maoMaquina){
                         inserir_fila(maoJogador, atualMaq);       
                     }else if((atualMaq->instintoAssasino >= atualJogador->instintoAssasino))
                     {
-                        printf("A carta do bot (%s) com %.2f ganhou da carta do jogador (%s) com %.2f no atributo de instinto assasino\n", atualMaq->nome, atualMaq->velocidade, atualJogador->nome, atualJogador->velocidade);
+                        printf("A carta do bot (%s) com %.2f ganhou da carta do jogador (%s) com %.2f no atributo de instinto assasino\n", atualMaq->nome, atualMaq->instintoAssasino, atualJogador->nome, atualJogador->instintoAssasino);
                         inserir_fila(maoJogador, atualJogador);
                         inserir_fila(maoJogador, atualMaq);
                     }
@@ -386,9 +386,10 @@ int main(){
     
     int resultado = jogo(maoJogador, maoMaquina);
     if(resultado == 1){
-        printf("O jogador ganhou!!");
+        printf("O jogador ganhou!!\n");
+        return 0;
     }
-    printf("O bot ganhou!!");
+    printf("O bot ganhou!!\n");
     
     //printf("\n mao do jogador: \n");
     //mostra_mao(maoJogador);
@@ -397,8 +398,8 @@ int main(){
     //mostra_mao(maoMaquina);
 
     // contar jogadas:
-    qtdJogadas++;
-    salva_qtd_jogadas();
-    recupera_qtd_jogadas();
+    //qtdJogadas++;
+    //salva_qtd_jogadas();
+    //recupera_qtd_jogadas();
 
 }
