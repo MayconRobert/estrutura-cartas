@@ -125,6 +125,10 @@ typedef struct _fila{
 
 typedef FILA *PTR_FILA;
 
+int filaVazia(PTR_FILA fila){
+    return fila->tamanho == 0 ? 1 : 0;
+}
+
 void inicializar_fila(PTR_FILA fila){
     fila->inicio = NULL;
     fila->fim = NULL;
@@ -178,6 +182,10 @@ int remover_fila(PTR_FILA fila){
 int main(){
 PTR_FILA fila = criar_fila();
 //empilhar_baralho();
+inserir_fila(fila, 3);
+inserir_fila(fila, 5);
+inserir_fila(fila, 7);
+remover_fila(fila);
 imprimir_fila(fila);
 return 0;
 }
