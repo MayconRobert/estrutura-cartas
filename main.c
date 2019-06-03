@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <locale.h>
 
 typedef struct _carta
 {
@@ -290,12 +291,61 @@ void jogar(PTR_BARALHO baralho){
 
 int main()
 {
-PTR_FILA fila = criar_fila();
-empilhar_baralho();
-inserir_fila(fila, 3);
-inserir_fila(fila, 5);
-inserir_fila(fila, 7);
-remover_fila(fila);
-imprimir_fila(fila);
+setlocale(LC_ALL, "Portuguese");
+
+//PTR_FILA fila = criar_fila();
+//empilhar_baralho();
+//inserir_fila(fila, 3);
+//inserir_fila(fila, 5);
+//inserir_fila(fila, 7);
+//remover_fila(fila);
+//imprimir_fila(fila);
+
+//Testar o jogo
+    //Primeiro: precisamos dessas funções acionadas:
+         /*Criar a Fila*/
+        /*Criar o Baralho*/
+        /*Embaralhar o Baralho*/
+
+    //Segundo: obter um menu para testar o jogo
+int op;
+do{
+     system("cls");
+     printf("\n*************** Menu ***************\n\n");
+     printf("\n1- Mostrar o Baralho\n");
+     printf("\n2- Jogar\n");
+     printf("\n3- Sair \n");
+     printf("\nEntre com a sua Opção: \n");
+     scanf("%d", &op);
+    switch(op){
+        case 1:{
+           system("cls");
+           printf("Mostrando o Baralho\n");
+           empilhar_baralho();
+           break;
+        }
+        case 2:{
+           system("cls");
+           /*Criando o Baralho */
+            PTR_BARALHO baralho = criar_baralho();
+           jogar(&baralho);
+           /*Embaralhando o Baralho*/
+           int *pcartas;
+           int cartas[52];
+           pcartas=cartas;
+           embaralhar_baralho(pcartas);
+           break;
+        }
+         case 3:{
+           system("cls");
+           printf("\nSaindo do Programa\n");
+           exit (0);
+           break;
+        }
+        default:{
+           printf("\nEntre com um valor válido!\n");
+        }
+    }
+}while (op != 3);
 return 0;
 }
