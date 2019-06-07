@@ -9,46 +9,14 @@
 // Fontes True Type
 #include <allegro5/allegro_ttf.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <windows.h>
 
 #define LARGURA_TELA 1024
 #define ALTURA_TELA 768
 
-// Função Main
-int main(void)
-{
-	/*----------------------VARIÁVEIS DO PROGRAMA-----------------------*/
-	// Janela principal
-	ALLEGRO_DISPLAY *janela = NULL;
+void carregarRecursos(ALLEGRO_DISPLAY *janela) {
 
-	// Imagens
-	ALLEGRO_BITMAP *background = NULL;
-	ALLEGRO_BITMAP *btnJogar = NULL;
-	ALLEGRO_BITMAP *btnLeader = NULL;
-	ALLEGRO_BITMAP *btnComoJogar = NULL;
-	ALLEGRO_BITMAP *btn21 = NULL;
-	ALLEGRO_BITMAP *btnTrunfo = NULL;
-	ALLEGRO_BITMAP *btnMenu = NULL;
-
-	// Fila de eventos na tela
-	ALLEGRO_EVENT_QUEUE *fila_eventos = NULL;
-
-	// Recebe os eventos que sai da fila de eventos
-	ALLEGRO_EVENT evento;
-
-	// Controla quanto tempo será esperado para acontecer um evento até que continue a execução
-	ALLEGRO_TIMEOUT timeout;
-
-	// Arquivo de fonte
-	ALLEGRO_FONT *fonte = NULL;
-
-	// Controla a saida do programa
-	int sair = 0;
-
-	// Inicializa o timeout com um tempo de 50ms
-	al_init_timeout(&timeout, 0.05);
-
-	/*----------------------INICIALIZA O PROGRAMA-----------------------*/
-	
 	// Tenta inicializar o Allegro
 	if (!al_init()) {
 		al_show_native_message_box(janela, "Error", "Erro", "Falha ao inicializar o Allegro!",
@@ -85,6 +53,58 @@ int main(void)
 			NULL, ALLEGRO_MESSAGEBOX_ERROR);
 		return -1;
 	}
+}
+
+void carregaEventosJanela(ALLEGRO_DISPLAY *janela, ALLEGRO_EVENT_QUEUE *fila_eventos) {
+	// Configura o título da janela
+	al_set_window_title(janela, "JOGOS DE CARTAS");
+
+	// Registra todos os eventos ocorridos na janela para a fila de eventos
+	al_register_event_source(fila_eventos, al_get_display_event_source(janela));
+
+	// Irá ser tratado os eventos vindos do mouse
+	al_register_event_source(fila_eventos, al_get_mouse_event_source());
+
+}
+
+int inicializarTela() {
+	/*----------------------VARIÁVEIS DO PROGRAMA-----------------------*/
+
+	// Arquivo de Leaderboards
+	FILE * file;
+
+	// Janela principal
+	ALLEGRO_DISPLAY *janela = NULL;
+
+	// Imagens
+	ALLEGRO_BITMAP *background = NULL;
+	ALLEGRO_BITMAP *titulo = NULL;
+	ALLEGRO_BITMAP *btnLeader = NULL;
+	ALLEGRO_BITMAP *btnComoJogar = NULL;
+	ALLEGRO_BITMAP *btn21 = NULL;
+	ALLEGRO_BITMAP *btnTrunfo = NULL;
+
+	// Fila de eventos na tela
+	ALLEGRO_EVENT_QUEUE *fila_eventos = NULL;
+
+	// Recebe os eventos que sai da fila de eventos
+	ALLEGRO_EVENT evento;
+
+	// Controla quanto tempo será esperado para acontecer um evento até que continue a execução
+	ALLEGRO_TIMEOUT timeout;
+
+	// Arquivo de fonte
+	ALLEGRO_FONT *fonte = NULL;
+
+	// Controla a saida do programa
+	int sair = 0;
+
+	// Inicializa o timeout com um tempo de 50ms
+	al_init_timeout(&timeout, 0.05);
+
+	/*----------------------INICIALIZA O PROGRAMA-----------------------*/
+	
+	carregarRecursos(janela);
 
 	// Cria a janela
 	janela = al_create_display(LARGURA_TELA, ALTURA_TELA);
@@ -106,14 +126,16 @@ int main(void)
 		return -1;
 	}
 
-	// Carrega a imagem de fundo
+	// Carrega as imagens
 	background = al_load_bitmap("../background.jpg");
-	btnJogar = al_load_bitmap("../btnJogar.jpg");
+	titulo = al_load_bitmap("../Titulo.png");
+	btn21 = al_load_bitmap("../btn21.jpg");
+	btnTrunfo = al_load_bitmap("../btnTrunfo.jpg");
 	btnComoJogar = al_load_bitmap("../btnComoJogar.jpg");
 	btnLeader = al_load_bitmap("../btnLeaderboards.jpg");
 
 	// Checa se a imagem carregou corretamente
-	if (!background || !btnJogar || !btnComoJogar || !btnLeader) {
+	if (!background || !btn21 || !btnTrunfo || !btnComoJogar || !btnLeader || !titulo) {
 		al_show_native_message_box(janela, "Error", "Erro", "Falha ao carregar as imagens",
 			NULL, ALLEGRO_MESSAGEBOX_ERROR);
 		al_destroy_bitmap(background);
@@ -142,23 +164,20 @@ int main(void)
 	}
 
 	// Configura o título da janela
-	al_set_window_title(janela, "JOGOS DE CARTAS");
+	carregaEventosJanela(janela, fila_eventos);
 
-	// Registra todos os eventos ocorridos na janela para a fila de eventos
-	al_register_event_source(fila_eventos, al_get_display_event_source(janela));
-
-	// Irá ser tratado os eventos vindos do mouse
-	al_register_event_source(fila_eventos, al_get_mouse_event_source());
 
 	// Desenha as imagens na tela. Os valores representam o X e Y e o ultimo é uma flag
 	al_draw_bitmap(background, 0, 0, 0);
-	al_draw_bitmap(btnJogar, 320, 300, 0);
-	al_draw_bitmap(btnComoJogar, 320, 400, 0);
-	al_draw_bitmap(btnLeader, 320, 500, 0);
+	al_draw_bitmap(titulo, 20, 90, 0);
+	al_draw_bitmap(btn21, 320, 300, 0);
+	al_draw_bitmap(btnTrunfo, 320, 400, 0);
+	al_draw_bitmap(btnComoJogar, 320, 500, 0);
+	al_draw_bitmap(btnLeader, 320, 600, 0);
 
 	// Texto estático centralizado
 	// Parametros: fonte, cor, posição X, posição Y, flags, texto
-	al_draw_text(fonte, al_map_rgb(0, 0, 255), LARGURA_TELA / 2, 90, ALLEGRO_ALIGN_CENTRE, "JOGOS DE CARTAS");
+	//al_draw_text(fonte, al_map_rgb(0, 0, 255), LARGURA_TELA / 2, 90, ALLEGRO_ALIGN_CENTRE, "JOGOS DE CARTAS");
 
 	// Atualiza a tela
 	al_flip_display();
@@ -188,51 +207,19 @@ int main(void)
 			else if (evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
 
 				// Checa se o click foi no primeiro botão
-				if (evento.mouse.x >= LARGURA_TELA / 2 - al_get_bitmap_width(btnJogar) / 2 &&
-					evento.mouse.x <= LARGURA_TELA / 2 + al_get_bitmap_width(btnJogar) / 2 &&
-					evento.mouse.y >= ALTURA_TELA / 2 - al_get_bitmap_height(btnJogar) &&
-					evento.mouse.y <= ALTURA_TELA / 2 + al_get_bitmap_height(btnJogar) - 90)
+				if (evento.mouse.x >= LARGURA_TELA / 2 - al_get_bitmap_width(btn21) / 2 &&
+					evento.mouse.x <= LARGURA_TELA / 2 + al_get_bitmap_width(btn21) / 2 &&
+					evento.mouse.y >= ALTURA_TELA / 2 - al_get_bitmap_height(btn21) &&
+					evento.mouse.y <= ALTURA_TELA / 2 + al_get_bitmap_height(btn21) - 90)
 				{
-					al_set_system_mouse_cursor(janela, ALLEGRO_SYSTEM_MOUSE_CURSOR_QUESTION);
-
-					// Libera os botões
-					al_destroy_bitmap(btnJogar);
-					al_destroy_bitmap(btnComoJogar);
-					al_destroy_bitmap(btnLeader);
-
-					// Desenha novamente a tela
-					al_draw_bitmap(background, 0, 0, 0);
-
-					// Adiciona novamente o titulo
-					al_draw_text(fonte, al_map_rgb(0, 0, 255), LARGURA_TELA / 2, 90, ALLEGRO_ALIGN_CENTRE, "JOGOS DE CARTAS");
-
-					// Adiciona os novos botões
-					btn21 = al_load_bitmap("../btn21.jpg");
-					btnTrunfo = al_load_bitmap("../btnTrunfo.jpg");
-					btnMenu = al_load_bitmap("../btnMenu.jpg");
-
-					// Checa se a imagem carregou corretamente
-					if (!btn21 || !btnTrunfo || !btnMenu) {
-						al_show_native_message_box(janela, "Error", "Erro", "Falha ao carregar as imagens",
-							NULL, ALLEGRO_MESSAGEBOX_ERROR);
-						al_destroy_bitmap(background);
-						return -1;
-					}
-
-					// Desenha os botões na tela
-					al_draw_bitmap(btn21, 320, 300, 0);
-					al_draw_bitmap(btnTrunfo, 320, 400, 0);
-					al_draw_bitmap(btnMenu, 600, 650, 0);
-
-					al_flip_display();
-
+					al_set_system_mouse_cursor(janela, ALLEGRO_SYSTEM_MOUSE_CURSOR_MOVE);
 				}
 
 				// Checa se o click foi no segundo botão
-				else if (evento.mouse.x >= LARGURA_TELA / 2 - al_get_bitmap_width(btnComoJogar) / 2 &&
-						evento.mouse.x <= LARGURA_TELA / 2 + al_get_bitmap_width(btnComoJogar) / 2 &&
-						evento.mouse.y >= ALTURA_TELA / 2 - al_get_bitmap_height(btnComoJogar) + 110 &&
-						evento.mouse.y <= ALTURA_TELA / 2 + al_get_bitmap_height(btnComoJogar) + 10)
+				else if (evento.mouse.x >= LARGURA_TELA / 2 - al_get_bitmap_width(btnTrunfo) / 2 &&
+						evento.mouse.x <= LARGURA_TELA / 2 + al_get_bitmap_width(btnTrunfo) / 2 &&
+						evento.mouse.y >= ALTURA_TELA / 2 - al_get_bitmap_height(btnTrunfo) + 110 &&
+						evento.mouse.y <= ALTURA_TELA / 2 + al_get_bitmap_height(btnTrunfo) + 10)
 					 {
 						al_set_system_mouse_cursor(janela, ALLEGRO_SYSTEM_MOUSE_CURSOR_BUSY);
 					 }
@@ -243,11 +230,25 @@ int main(void)
 					evento.mouse.y >= ALTURA_TELA / 2 - al_get_bitmap_height(btnComoJogar) + 200 &&
 					evento.mouse.y <= ALTURA_TELA / 2 + al_get_bitmap_height(btnComoJogar) + 120 )
 				{
-					al_set_system_mouse_cursor(janela, ALLEGRO_SYSTEM_MOUSE_CURSOR_MOVE);
+					ShellExecute(NULL, "open", "https://github.com/MayconRobert/estrutura-cartas#como-jogar", NULL, NULL, 1);
 				}
 
-				else {
-					al_set_system_mouse_cursor(janela, ALLEGRO_SYSTEM_MOUSE_CURSOR_DEFAULT);
+				// Checa se o click foi no quarto botão
+				else if (evento.mouse.x >= LARGURA_TELA / 2 - al_get_bitmap_width(btnLeader) / 2 &&
+					evento.mouse.x <= LARGURA_TELA / 2 + al_get_bitmap_width(btnLeader) / 2 &&
+					evento.mouse.y >= ALTURA_TELA / 2 - al_get_bitmap_height(btnLeader) + 300 &&
+					evento.mouse.y <= ALTURA_TELA / 2 + al_get_bitmap_height(btnLeader) + 220)
+				{
+					
+					file = fopen("../leaderboards.txt", "r");
+					if (file) {
+						system("notepad ../leaderboards.txt");
+						fclose(file);
+					}
+					else {
+						al_show_native_message_box(janela, "Error", "Erro", "Nenhum arquivo de Leaderboards encontrado\nOu falha ao carregar",
+							NULL, ALLEGRO_MESSAGEBOX_ERROR);
+					}
 				}
 			}
 		}
@@ -266,4 +267,10 @@ int main(void)
 	al_destroy_font(fonte);
 
 	return 0;
+}
+
+// Função Main
+void main(void)
+{
+	inicializarTela();
 }
