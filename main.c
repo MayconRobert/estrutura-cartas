@@ -151,6 +151,22 @@ void imprimir_fila(PTR_FILA fila) {
   printf("\n");
 }
 
+void salvarJogo(int soma_jogador, int soma_computador){
+  FILE *file;
+
+  file = fopen("leaderboards.txt", "a");
+  if(!file)
+  {
+    printf("Erro ao abrir o arquivo.\n");
+    exit(1);
+  }
+  fprintf(file, "\nResultado da partida passada.\n");
+  fprintf(file, "Total de pontos do jogador: %d", soma_jogador); // colocar aqui a variável de somatoria do jogador.
+  fprintf(file, "\nTotal de pontos do computador: %d", soma_computador); // colocar aqui a variavel de somatoria do computador.
+  fprintf(file, "\n-----------------------------\n");
+  fclose(file);
+}
+
 void jogar(PTR_BARALHO *baralho, int *placar_jogador, int *placar_computador) {
   srand(time(NULL));
   int soma_jogador = 0, soma_computador = 0;
@@ -254,30 +270,40 @@ void jogar(PTR_BARALHO *baralho, int *placar_jogador, int *placar_computador) {
   } while ((soma_jogador < 21) && (soma_computador < 21) && (op2 != 3));
   if ((soma_jogador > 21) && (soma_computador > 21))
     printf("O jogo ficou empatado\n");
+    salvarJogo(soma_jogador, soma_computador);
   else if (soma_jogador > 21) {
     printf("Você perdeu esta rodada\n");
     (*placar_computador) ++;
+    salvarJogo(soma_jogador, soma_computador);
   } else if (soma_computador > 21) {
     printf("Você ganhou esta rodada\n");
     (*placar_jogador) ++;
+    salvarJogo(soma_jogador, soma_computador);
   } else if (soma_jogador == 21) {
     printf("Você ganhou esta rodada\n");
     (*placar_jogador) ++;
+    salvarJogo(soma_jogador, soma_computador);
   } else if (soma_computador == 21) {
     printf("Você perdeu esta rodada\n");
     (*placar_computador) ++;
+    salvarJogo(soma_jogador, soma_computador);
   } else if ((soma_jogador == 21) && (soma_computador == 21))
     printf("O jogo ficou empatado\n");
+    salvarJogo(soma_jogador, soma_computador);
   else if (soma_jogador > soma_computador) {
     printf("Você ganhou esta rodada\n");
     (*placar_jogador) ++;
+    salvarJogo(soma_jogador, soma_computador);
   }else if (soma_jogador < soma_computador) {
     printf("Você perdeu esta rodada\n");
     (*placar_computador) ++;
+    salvarJogo(soma_jogador, soma_computador);
   } else printf("O jogo ficou empatado\n");
   destruir_baralho(&(*baralho));
+  salvarJogo(soma_jogador, soma_computador);
 }
 int main() {
+  
   setlocale(LC_ALL, "Portuguese");
   char ch;
   int op;
