@@ -160,7 +160,7 @@ void salvarJogo(int soma_jogador, int soma_computador){
     printf("Erro ao abrir o arquivo.\n");
     exit(1);
   }
-  fprintf(file, "\nResultado da partida passada.\n");
+  fprintf(file, "\nResultado da partida passada do jogo 21.\n");
   fprintf(file, "Total de pontos do jogador: %d", soma_jogador); // colocar aqui a variável de somatoria do jogador.
   fprintf(file, "\nTotal de pontos do computador: %d", soma_computador); // colocar aqui a variavel de somatoria do computador.
   fprintf(file, "\n-----------------------------\n");
@@ -181,18 +181,18 @@ void jogar(PTR_BARALHO *baralho, int *placar_jogador, int *placar_computador) {
     system("cls");
     printf("\n----------------- MENU DO JOGO -----------------\n");
     printf("\n1. Pegar carta \n");
-    printf("\n2. Não pegar carta \n");
-    printf("\n3. Mão do jogador\n");
-    printf("\n4. Mão do computador!\n");
+    printf("\n2. Nao pegar carta \n");
+    printf("\n3. Mao do jogador\n");
+    printf("\n4. Mao do computador!\n");
     printf("\n5. Sair do jogo \n");
-    printf("\nDigite um número correspondente a opção desejada: \n");
+    printf("\nDigite um numero correspondente a opcao desejada: \n");
     scanf("%d", &op2);
     switch(op2){
     case 1:
       {
         system("cls");
         carta_jogador = pegar_carta(&(*baralho));
-        printf("Você pegou a carta: |%d| \n\n", carta_jogador.valor);
+        printf("Voce pegou a carta: |%d| \n\n", carta_jogador.valor);
         //inserir_fila(maojogador, carta_jogador.valor);
         if (soma_computador == 0) {
           carta_computador = pegar_carta(&(*baralho));
@@ -206,7 +206,7 @@ void jogar(PTR_BARALHO *baralho, int *placar_jogador, int *placar_computador) {
             soma_computador += carta_computador.valor;
             printf("Computador pegou a carta |%d| \n\n", carta_computador.valor);
             //inserir_fila(maocomputador, carta_computador.valor);
-          } else printf("Computador não pegou nenhuma carta! \n\n");
+          } else printf("Computador nao pegou nenhuma carta! \n\n");
         }
         soma_jogador += carta_jogador.valor;
         scanf("%c", &ch);
@@ -215,7 +215,7 @@ void jogar(PTR_BARALHO *baralho, int *placar_jogador, int *placar_computador) {
     case 2:
       {
         system("cls");
-        printf("Você não pegou nenhuma carta! \n\n");
+        printf("Voce nao pegou nenhuma carta! \n\n");
         if (soma_computador == 0) {
           carta_computador = pegar_carta(&(*baralho));
           printf("Computador pegou a carta |%d| \n\n", carta_computador.valor);
@@ -228,7 +228,7 @@ void jogar(PTR_BARALHO *baralho, int *placar_jogador, int *placar_computador) {
             soma_computador += carta_computador.valor;
             printf("Computador pegou a carta |%d| \n\n", carta_computador.valor);
             //inserir_fila(maocomputador, carta_computador.valor);
-          } else printf("Computador não pegou nenhuma carta! \n\n");
+          } else printf("Computador nao pegou nenhuma carta! \n\n");
         }
         soma_jogador += carta_jogador.valor;
         scanf("%c", &ch);
@@ -237,7 +237,7 @@ void jogar(PTR_BARALHO *baralho, int *placar_jogador, int *placar_computador) {
     case 3:
       {
         system("cls");
-        printf("\nMão do jogador:");
+        printf("\nMao do jogador:");
         //imprimir_fila(maojogador);
         scanf("%c", &ch);
         break;
@@ -245,7 +245,7 @@ void jogar(PTR_BARALHO *baralho, int *placar_jogador, int *placar_computador) {
     case 4:
       {
         system("cls");
-        printf("\nMão do computador:");
+        printf("\nMao do computador:");
         //imprimir_fila(maocomputador);
         scanf("%c", &ch);
         break;
@@ -263,48 +263,47 @@ void jogar(PTR_BARALHO *baralho, int *placar_jogador, int *placar_computador) {
         scanf("%c", &ch);
       }
     }
-    printf("--------- PONTUAÇÃO DO JOGO ----------\n\n");
+    printf("--------- PONTUACAO DO JOGO ----------\n\n");
     printf("Soma do Jogador = %d\n\n", soma_jogador);
     printf("Soma do Computador = %d\n\n", soma_computador);
     scanf("%c", &ch);
   } while ((soma_jogador < 21) && (soma_computador < 21) && (op2 != 3));
   if ((soma_jogador > 21) && (soma_computador > 21))
     printf("O jogo ficou empatado\n");
-    salvarJogo(soma_jogador, soma_computador);
+   
   else if (soma_jogador > 21) {
-    printf("Você perdeu esta rodada\n");
+    printf("Voce perdeu esta rodada\n");
     (*placar_computador) ++;
-    salvarJogo(soma_jogador, soma_computador);
+    
   } else if (soma_computador > 21) {
-    printf("Você ganhou esta rodada\n");
+    printf("Voce ganhou esta rodada\n");
     (*placar_jogador) ++;
-    salvarJogo(soma_jogador, soma_computador);
+    
   } else if (soma_jogador == 21) {
-    printf("Você ganhou esta rodada\n");
+    printf("Voce ganhou esta rodada\n");
     (*placar_jogador) ++;
-    salvarJogo(soma_jogador, soma_computador);
+    
   } else if (soma_computador == 21) {
-    printf("Você perdeu esta rodada\n");
+    printf("Voce perdeu esta rodada\n");
     (*placar_computador) ++;
-    salvarJogo(soma_jogador, soma_computador);
+    
   } else if ((soma_jogador == 21) && (soma_computador == 21))
     printf("O jogo ficou empatado\n");
-    salvarJogo(soma_jogador, soma_computador);
+    
   else if (soma_jogador > soma_computador) {
-    printf("Você ganhou esta rodada\n");
+    printf("Voce ganhou esta rodada\n");
     (*placar_jogador) ++;
-    salvarJogo(soma_jogador, soma_computador);
+    
   }else if (soma_jogador < soma_computador) {
-    printf("Você perdeu esta rodada\n");
+    printf("Voce perdeu esta rodada\n");
     (*placar_computador) ++;
-    salvarJogo(soma_jogador, soma_computador);
+    
   } else printf("O jogo ficou empatado\n");
   destruir_baralho(&(*baralho));
-  salvarJogo(soma_jogador, soma_computador);
+  
 }
 int main() {
   
-  setlocale(LC_ALL, "Portuguese");
   char ch;
   int op;
   system("cls");
@@ -319,10 +318,10 @@ int main() {
     printf("\n----------------- MENU DO JOGO -----------------\n\n");
     printf("\n1.Olhar o Baralho\n");
     printf("\n2.Jogar\n");
-    printf("\n3.Olhar a Pontuação do jogo\n");
-    printf("\n4.Zerar a Pontuação do jogo\n");
-    printf("\n5.Sair do jogo \n");
-    printf("\nDigite o número da opção desejada: \n");
+    printf("\n3.Olhar a Pontuacao do jogo\n");
+    printf("\n4.Zerar a Pontuacao do jogo\n");
+    printf("\n5.Sair do jogo e salvar\n");
+    printf("\nDigite o numero da opcao desejada: \n");
     scanf("%d", &op);
     switch (op) {
     case 1:
@@ -363,7 +362,8 @@ int main() {
     case 5:
       {
         system("cls");
-        printf("\nSaindo do Programa\n");
+        salvarJogo(placar_jogador, placar_computador);
+        printf("\nSaindo do Programa e salvar\n");
         scanf("%c", &ch);
         exit(0);
         break;
