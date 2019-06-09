@@ -12,4 +12,4 @@ No turno do jogador humano, o mesmo escolhe o atributo.
 
 No turno do jogador máquina, o atributo determinado é aleatório.
 
-Ao final do jogo, será divulgado o resultado da partida. Com os resultados dispostos, o jogador humano é questionado se deseja uma nova partida. Em caso afirmativo, uma nova terá início. Caso contrário, o programa será encerrado.Forwarded
+Ao final do jogo, será divulgado o resultado da partida. Com os resultados dispostos, o jogador humano é questionado se deseja uma nova partida. Em caso afirmativo, uma nova terá início. Caso contrário, o programa será encerrado.
