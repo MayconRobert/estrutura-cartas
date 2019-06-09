@@ -1,15 +1,31 @@
 # Jogos de Cartas em C
-Trabalho de Estrutura de Dados que constitui em 2 jogos de cartas programados em C
+Trabalho de Estrutura de Dados que constitui em 2 jogos de cartas programados em C.
+Para executar o programa, basta iniciar o "Jogos de Cartas.exe"
+O programa é pesado por conta do Allegro.
+
+***
 
 ## Como Jogar
+
 ### Super Trunfo
-	How to play Super Trunfo
-	Detailed Instructions
+Nesta versão, cada jogador inicia a partida com 16 cartas. O jogador escolhe o atributo de sua primeira carta para ser comparado com a primeira de seu oponente, quem tiver a carta com o valor mais alto no atributo determiando receberá as duas, colocando-as ao final do baralho. O segundo jogador segue realizando suas escolhas. Este cenário se repete até que:
+
+Um dos jogadores fique com 0 cartas em seu baralho, determiando como vencedor, seu oponente;
+
+***
+#### Descrição Geral
+
+Teremos dois jogadores: o jogador humano e o jogador máquina. A distribuição de cartas é aleatória, porém, a carta que será jogada é sempre a primeira do baralho, deixando ao jogador escolher o atributo.
+
+No turno do jogador humano, o mesmo escolhe o atributo.
+
+No turno do jogador máquina, o atributo determinado é aleatório.
+
+Ao final do jogo, será divulgado o resultado da partida. Com os resultados dispostos, o jogador humano é questionado se deseja uma nova partida. Em caso afirmativo, uma nova terá início. Caso contrário, o programa será encerrado.
 
 ***
 ### 21
-### How to play 21
-#### Detailed Instructions
+#### Instruções
 Nesta versão, cada jogador inicia a partida com 0 pontos e recebe uma carta. O valor da carta escolhida é então adicionado aos seus pontos. Este valor segue a seguinte regra: cada ás possui valor 1; as cartas numéricas possuem seus valores nominais; e as
 cartas com figura (J, Q e K) valem 10. Os pontos de cada carta escolhida são computados para os jogadores, os quais deverão decidir se desejam mais uma carta. Diante dessa escolha, o jogador pode solicitar mais uma carta ou parar o seu jogo por aí. O segundo jogador segue com seu turno realizando as mesmas escolhas. Este cenário se repete até que:
 - Um dos jogadores atinja exatos 21 pontos, sendo considerado o vencedor;
