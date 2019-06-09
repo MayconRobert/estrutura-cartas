@@ -1,5 +1,0 @@
-
-Resultado da partida passada do jogo 21.
-Total de pontos do jogador: 0
-Total de pontos do computador: 0
------------------------------
