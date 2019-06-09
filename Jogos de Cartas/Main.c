@@ -212,7 +212,7 @@ int inicializarTela() {
 					evento.mouse.y >= ALTURA_TELA / 2 - al_get_bitmap_height(btn21) &&
 					evento.mouse.y <= ALTURA_TELA / 2 + al_get_bitmap_height(btn21) - 90)
 				{
-					al_set_system_mouse_cursor(janela, ALLEGRO_SYSTEM_MOUSE_CURSOR_MOVE);
+					system("start ../21.exe");
 				}
 
 				// Checa se o click foi no segundo botão
@@ -221,7 +221,8 @@ int inicializarTela() {
 						evento.mouse.y >= ALTURA_TELA / 2 - al_get_bitmap_height(btnTrunfo) + 110 &&
 						evento.mouse.y <= ALTURA_TELA / 2 + al_get_bitmap_height(btnTrunfo) + 10)
 					 {
-						al_set_system_mouse_cursor(janela, ALLEGRO_SYSTEM_MOUSE_CURSOR_BUSY);
+						//al_set_system_mouse_cursor(janela, ALLEGRO_SYSTEM_MOUSE_CURSOR_BUSY);
+						system("start ../SuperTrunfo.exe");
 					 }
 
 				// Checa se o click foi no terceiro botão
@@ -240,9 +241,9 @@ int inicializarTela() {
 					evento.mouse.y <= ALTURA_TELA / 2 + al_get_bitmap_height(btnLeader) + 220)
 				{
 					
-					file = fopen("../leaderboards.txt", "r");
+					file = fopen("leaderboards.txt", "r");
 					if (file) {
-						system("notepad ../leaderboards.txt");
+						system("notepad leaderboards.txt");
 						fclose(file);
 					}
 					else {
