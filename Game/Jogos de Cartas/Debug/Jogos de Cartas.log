@@ -1,0 +1,7 @@
+﻿  Main.c
+d:\users\mayco\desktop\desenvolvimento\unisal\estrutura de dados\jogos de cartas\estrutura-cartas\jogos de cartas\main.c(24): warning C4098: 'carregarRecursos': 'void' function returning a value
+d:\users\mayco\desktop\desenvolvimento\unisal\estrutura de dados\jogos de cartas\estrutura-cartas\jogos de cartas\main.c(31): warning C4098: 'carregarRecursos': 'void' function returning a value
+d:\users\mayco\desktop\desenvolvimento\unisal\estrutura de dados\jogos de cartas\estrutura-cartas\jogos de cartas\main.c(38): warning C4098: 'carregarRecursos': 'void' function returning a value
+d:\users\mayco\desktop\desenvolvimento\unisal\estrutura de dados\jogos de cartas\estrutura-cartas\jogos de cartas\main.c(46): warning C4098: 'carregarRecursos': 'void' function returning a value
+d:\users\mayco\desktop\desenvolvimento\unisal\estrutura de dados\jogos de cartas\estrutura-cartas\jogos de cartas\main.c(54): warning C4098: 'carregarRecursos': 'void' function returning a value
+  Jogos de Cartas.vcxproj -> D:\Users\mayco\Desktop\Desenvolvimento\UNISAL\Estrutura De Dados\Jogos De Cartas\estrutura-cartas\Debug\Jogos de Cartas.exe

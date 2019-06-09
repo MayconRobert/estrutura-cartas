@@ -1,0 +1,12 @@
+
+Resultado da partida passada do jogo 21.
+Total de pontos do jogador: 0
+Total de pontos do computador: 0
+-----------------------------
+
+Resultado da partida passada do jogo 21.
+Total de pontos do jogador: 0
+Total de pontos do computador: 1
+-----------------------------
+Data: Sun Jun 09 15:28:34 2019
+ 	 Ganhador: Player com 55 jogadas.
